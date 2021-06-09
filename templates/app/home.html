@@ -55,6 +55,25 @@
             name_field = document.getElementById("name_taking_form");
             name_field.style = "visibility: visible;";
         }
+        pop_up_rename_resume=function(id){
+            
+            name_field=document.getElementById("rename_taking_form");
+            document.getElementById("renameResumeId").value=id;
+            name_field.style="visibility: visible;";
+        }
+        rename_resume=function(){
+            if(validate_name(document.getElementById("temp_rename").value)){
+                document.getElementById("renameResume").value = document.getElementById("temp_rename").value;
+                
+                document.getElementById("submit").click();
+            }else{
+                alert("Enter a valid name containing (a-z, 0-9, '_')");
+            }
+        }
+        rename_cancel_resume=function(){
+            name_field = document.getElementById("rename_taking_form");
+            name_field.style = "visibility: hidden;";
+        }
         create_new_resume = function(){
             
             if(validate_name(document.getElementById("temp_name").value)){
@@ -128,6 +147,7 @@
                             <div class="z-20 opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-left  scale-95">
                                 <div class="absolute right-0 w-32 top-12  mt-2 origin-top-left bg-gray-100 border border-yellow-100 divide-y divide-gray-100 rounded-md shadow-lg outline-none" aria-labelledby="headlessui-menu-button-1" id="headlessui-menu-items-117" role="menu">
                                     <div class="py-1" style="font-family: 'Open Sans';">
+                                        <a href="javascript:window.onclick = pop_up_rename_resume('{{resume.id}}');" tabindex="0" class="text-gray-700 flex justify-between px-4 py-2 text-sm leading-5 text-left"  role="menuitem" style="color: darkolivegreen;" >Rename</a>
                                         <a href="index/{{resume.id}}" tabindex="0" class="text-gray-700 flex justify-between px-4 py-2 text-sm leading-5 text-left"  role="menuitem" style="color: darkolivegreen;">Edit</a>
                                         <a href="{% static 'pdfs/' %}{{resume.pdfFile}}" download tabindex="1" class="text-gray-700 flex justify-between  px-4 py-2 text-sm leading-5 text-left" role="menuitem">
                                             pdf
@@ -156,6 +176,23 @@
                         </div>
 
                     {% endfor %} 
+                    <div class="flex flex-wrap content-between vertical-align w-3/4 py-3 ">
+                        <form class="flex flex-wrap content-between vertical-align w-3/4  " id = "rename_taking_form" name = "rename_taking_form" action = '.' style="visibility: hidden;">
+                              <div class="flex pt-10 pr-6 relative items-center bg-transparent border-b border-purple-500 py-2">
+                              <input id = "temp_rename" required class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Resume name" aria-label="Full name">
+
+                              <button class="bg-purple-500 hover:bg-purple-900 text-white transition duration-300 ease-in-out  py-1 px-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-20"
+                              type = "button" onclick="rename_resume()">
+                                  Rename
+                              </button>
+                              <button  class="bg-gray-50  text-gray-500 hover:bg-gray-200 transition duration-300 ease-in-out py-1 px-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-20"
+                              type="button" onclick = "rename_cancel_resume()">
+                                  Cancel
+                              </button>
+                              </div>
+                          </form>
+
+                   </div>
 
                     
                 </div>
@@ -201,6 +238,20 @@
                         </button>
                         </div>
                     </form>
+                    <form class="flex flex-wrap content-between vertical-align w-3/4  " id = "rename_taking_form" name = "rename_taking_form" action = '.' style="visibility: hidden;">
+                        <div class="flex pt-10 pr-6 relative items-center bg-transparent border-b border-purple-500 py-2">
+                        <input id = "temp_rename" required class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Resume name" aria-label="Full name">
+                        
+                        <button class="bg-purple-500 hover:bg-purple-900 text-white transition duration-300 ease-in-out  py-1 px-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-20"
+                        type = "button" onclick="rename_resume()">
+                            Rename
+                        </button>
+                        <button  class="bg-gray-50  text-gray-500 hover:bg-gray-200 transition duration-300 ease-in-out py-1 px-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-20" 
+                        type="button" onclick = "rename_cancel_resume()">
+                            Cancel
+                        </button>
+                        </div>
+                    </form>
                 
                     
                     <!-- Individual card end-->
@@ -212,6 +263,8 @@
             <input type="hidden" id = "delete_resume_id" name="delete_resume_id">
             <input type="hidden" id = "delete_flag" name = "delete_flag" value = "false">
             <input type="hidden" id = "newResume" name = "newResume">
+             <input type="hidden" id = "renameResume" name="renameResume">
+            <input type="hidden" id = "renameResumeId" name="renameResumeId">
             <input type = "submit" id = "submit" name = "submit" style = "visibility: hidden;">
         </form>
     </body>
